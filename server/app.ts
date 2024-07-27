@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import express from "express";
+import express, { Request, Response } from "express";
 import cors, { CorsOptions } from "cors";
 
 import connectDB from "../config/db";
@@ -7,7 +7,7 @@ import appRoutes from "../routes/index";
 
 dotenv.config();
 
-const app = express();
+const app: express.Application = express();
 
 // Cross-Origin Resource Sharing
 const allowedOrigins: string[] = [
@@ -31,6 +31,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/uploads", express.static("uploads"));
+
+// Testing Route
+app.get("/", (req: Request, res: Response) => {
+  res.json({ success: true, message: "Afrigems backend is working!" });
+});
 
 // routes
 app.use("/api/v1", appRoutes);
