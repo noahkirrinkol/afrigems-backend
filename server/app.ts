@@ -14,8 +14,8 @@ const allowedOrigins: string[] = [
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:5173",
-  "https://afrigems-admin.vercel.app/",
-  "https://afrigems-frontend.vercel.app/",
+  "https://afrigems-admin.vercel.app",
+  "https://afrigems-frontend.vercel.app",
 ];
 
 const options: CorsOptions = {
