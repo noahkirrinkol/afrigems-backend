@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
-import cors, { CorsOptions } from "cors";
-
+import cors from "cors";
 import connectDB from "../config/db";
 import appRoutes from "../routes/index";
 
@@ -17,19 +16,18 @@ const allowedOrigins: string[] = [
   "http://localhost:5173",
 ];
 
-const options: CorsOptions = {
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-      return callback(new Error(msg), false);
+const corsOptions = {
+  origin: (origin: string | undefined, callback: any) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
     }
-    return callback(null, true);
   },
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(options));
+app.use(cors(corsOptions));
 
 // db connection
 connectDB();
