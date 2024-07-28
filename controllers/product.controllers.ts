@@ -5,7 +5,7 @@ const BASE_URL = process.env.BASE_URL;
 
 export const addProduct = async (req: Request, res: Response) => {
   const { title, price, description, category } = req.body;
-  const imagePath = req.file ? `${BASE_URL}/uploads/${req.file.filename}` : "";
+  const imagePath = req.file ? req.file.path : "";
 
   const product = new Product({
     title,

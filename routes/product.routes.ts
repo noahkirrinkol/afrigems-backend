@@ -8,16 +8,27 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/product.controllers";
+import cloudinary from "../config/cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
+interface ExtendedParams {
+  folder: string;
+  format: (
+    req: express.Request,
+    file: Express.Multer.File
+  ) => string | Promise<string>;
+  public_id: (req: express.Request, file: Express.Multer.File) => string;
+}
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "products",
+    format: async (req, file) => "jpeg" || "png", // supports promises as well
+    public_id: (req, file) => Date.now() + "-" + file.originalname,
+  } as ExtendedParams, // Use the extended params type
 });
 
 const upload = multer({ storage });
