@@ -52,9 +52,7 @@ export const register = async (req: Request, res: Response) => {
       throw new Error("JWT secret key is not defined.");
     }
 
-    const token = jwt.sign({ id: newUser._id }, secretKey, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign({ id: newUser._id }, secretKey);
 
     return res.status(201).json({
       success: true,
@@ -97,9 +95,7 @@ export const login = async (req: Request, res: Response) => {
           throw new Error("JWT secret key is not defined.");
         }
 
-        const token = jwt.sign({ id: userExists._id }, secretKey, {
-          expiresIn: "1d",
-        });
+        const token = jwt.sign({ id: userExists._id }, secretKey);
 
         res.status(200).json({
           success: true,
