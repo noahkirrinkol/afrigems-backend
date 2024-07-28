@@ -26,9 +26,9 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "products",
-    format: async (req, file) => "jpeg" || "png", // supports promises as well
+    format: async (req, file) => "jpeg" || "png" || "jpg" || "webp",
     public_id: (req, file) => Date.now() + "-" + file.originalname,
-  } as ExtendedParams, // Use the extended params type
+  } as ExtendedParams,
 });
 
 const upload = multer({ storage });
