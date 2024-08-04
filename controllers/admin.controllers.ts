@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+messageimport dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
@@ -24,7 +24,7 @@ export const register = async (req: Request, res: Response) => {
     if (emailExists) {
       return res.status(409).json({
         success: false,
-        error: "Admin with that email already exists.",
+        message: "Admin with that email already exists.",
       });
     }
 
@@ -55,7 +55,7 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(500).json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -67,7 +67,7 @@ export const login = async (req: Request, res: Response) => {
     if (!email || !password) {
       res.status(400).json({
         status: false,
-        error: "Email and password are required",
+        message: "Email and password are required",
       });
     }
 
@@ -76,7 +76,7 @@ export const login = async (req: Request, res: Response) => {
     if (!adminExists) {
       res.status(401).json({
         success: false,
-        error: "No admin with the provided email found.",
+        message: "No admin with the provided email found.",
       });
     } else {
       const passwordMatch = await bcrypt.compare(
@@ -99,12 +99,12 @@ export const login = async (req: Request, res: Response) => {
           token: token,
         });
       } else {
-        res.status(401).json({ success: false, error: "Invalid password" });
+        res.status(401).json({ success: false, message: "Invalid password" });
       }
     }
   } catch (error: any) {
     console.error("Error logging in admin:", error);
-    return res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
